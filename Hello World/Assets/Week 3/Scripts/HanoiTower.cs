@@ -18,12 +18,14 @@ public class HanoiTower : MonoBehaviour
     int[] peg3 = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
     public int currentPeg = 1;
+    int[] currentList;
+    int[] targetList;
 
     [ContextMenu("Move Right")]
     void MoveRight()
     {
         int[] currentList = getPeg(currentPeg);
-        int[] tagetList = getPeg(currentPeg + 1);
+        int[] targetList = getPeg(currentPeg + 1);
 
         if (targetList == null) return;
 
@@ -33,7 +35,7 @@ public class HanoiTower : MonoBehaviour
         if (toIndex == -1) return;
         if (canMoveIntoPeg(currentList[fromIndex], currentList) == false) return;
 
-        moveIntoPeg(fromIndex, toIndex, currentList, tagetList);
+        moveIntoPeg(fromIndex, toIndex, currentList, targetList);
     }
 
     [ContextMenu("Move Left")]
@@ -75,7 +77,7 @@ public class HanoiTower : MonoBehaviour
     {
         int bottomIndex = getBottomNumIndex(peg);
 
-        if (bottomIndex == peg.Length - 1 && peg[peg.Length - 1]) return true;
+        //if (bottomIndex == peg.Length - 1 && peg[peg.Length - 1]) return true;
 
         int bottomPlus1 = bottomIndex++;
         return bottomPlus1 == 0;
