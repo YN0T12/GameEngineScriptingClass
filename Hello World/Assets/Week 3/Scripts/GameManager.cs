@@ -3,20 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-
 namespace Battleship
 {
     public class GameManager : MonoBehaviour
     {
         [SerializeField]
-        private int[,] grid = new int[,]
-        {
-            {1,1,0,0,1},
-            {0,0,0,0,0},
-            {0,0,1,0,1},
-            {1,0,1,0,0},
-            {1,0,1,0,1}
-        };
+        private int[,] grid;
 
         private bool[,] hits;
 
@@ -38,6 +30,15 @@ namespace Battleship
 
         private void Awake()
         {
+            grid = new int[,]
+        {
+            { Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2)},
+            { Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2)},
+            { Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2)},
+            { Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2)},
+            { Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2),Random.Range(0, 2)}
+        };
+
             nRows = grid.GetLength(0);
             nCols = grid.GetLength(1);
 
