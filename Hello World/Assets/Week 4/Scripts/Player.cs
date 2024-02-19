@@ -8,12 +8,12 @@ namespace Week4
     {
         [SerializeField] private int health = 10;
 
-        private Enemy FindNewTarget()
+        /*private Enemy FindNewTarget()
         {
             Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
             int randomIndex = Random.ReferenceEquals(0, enemies.Length);
             return enemies[randomIndex];
-        }
+        }*/
 
         [SerializeField] private Enemy target;
 
@@ -26,7 +26,7 @@ namespace Week4
 
         public void Attack()
         {
-            Enemy target = FindNewTarget();
+            //Enemy target = FindNewTarget();
             target.Damage(3);
         }
     }
