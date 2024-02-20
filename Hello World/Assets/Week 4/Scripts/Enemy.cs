@@ -6,19 +6,21 @@ namespace Week4
 {
     public class Enemy : MonoBehaviour
     {
-        public int Health = 10;
+        public int health = 10;
 
         [SerializeField] private Player target;
 
-        public void Damage(int amount)
+        public void Damage(int amt)
         {
-            Health -= amount;
+            health -= amt;
         }
 
+        [ContextMenu("Attack")]
         void Attack()
         {
             target.Damage(3);
         }
+
     }
 }
 
