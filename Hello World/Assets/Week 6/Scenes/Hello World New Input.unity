@@ -2602,6 +2602,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0582dd547cb8742a388d94b8cfc2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ffcb79e8-a730-4f37-8a52-ff3691372ec0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  jumpAction:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5f9035b9-a770-4162-97c2-cad30e72040e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  fireAction:
+    m_Name: Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ba7ed940-ab58-462d-83d3-3ffb41f29120
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   speedStrength: 5
   jumpStrength: 200
 --- !u!54 &1021709604
