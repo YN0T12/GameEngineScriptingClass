@@ -14,9 +14,12 @@ namespace Week6
 
         Rigidbody rb;
 
-        [SerializeField] float speedStrength = 8;
+        [SerializeField] float speedStrength = 3;
         [SerializeField] float tiredSpeedStrength = 3;
         [SerializeField] float jumpStrength = 3;
+        [SerializeField] float rotationSpeed = 8;
+
+        [SerializeField] CharacterController controller;
 
         [SerializeField] float stamina = 100f;
         [SerializeField] float maxStamina = 100f;
@@ -75,7 +78,7 @@ namespace Week6
         {
             Vector2 input = moveAction.ReadValue<Vector2>();
             
-            //refilling stamina 
+            /*//refilling stamina 
             if ((input.x == 0 || input.y == 0) && stamina < maxStamina)
             {
                 timer += Time.deltaTime;
@@ -101,7 +104,7 @@ namespace Week6
                 }
 
                 if (stamina < 0) stamina = 0;
-            }
+            }*/
             float speed = speedStrength;
             //Setting tired speed if stamina is 0
             if (stamina == 0)
@@ -111,8 +114,9 @@ namespace Week6
             else speed = speedStrength;
 
             input *= speed;
-            rb.velocity = new Vector3(input.x, rb.velocity.y, input.y);
-            //rb.rotation = Quaternion.AngleAxis(rb.rotation, rb.velocity);
+
+            controller.Move(transform.forward * speed * input.y * Time.deltaTime);
+            transform.Rotate(transform.up, rotationSpeed * input.x * Time.deltaTime);
 
             //Camera controls
             /*float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
