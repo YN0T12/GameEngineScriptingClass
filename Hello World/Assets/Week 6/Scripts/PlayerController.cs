@@ -26,11 +26,6 @@ namespace Week6
 
         [SerializeField] float runCost = 1f;
 
-        [SerializeField] float sensX = 200f;
-        [SerializeField] float sensY = 200f;
-
-        [SerializeField] Transform orientation;
-
         float xRot;
         float yRot;
 
@@ -113,8 +108,10 @@ namespace Week6
             }
             else speed = speedStrength;
 
+
             input *= speed;
 
+            //rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, input.z);
             controller.Move(transform.forward * speed * input.y * Time.deltaTime);
             transform.Rotate(transform.up, rotationSpeed * input.x * Time.deltaTime);
 
