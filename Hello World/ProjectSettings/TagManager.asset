@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Enemy
   - Flower
+  - Key
+  - LockedDoorTrigger
+  - Coin
+  - Trap
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace Week7
 {
@@ -17,6 +19,24 @@ namespace Week7
         GameObject bulletPrefab;
         [SerializeField]
         Transform gunTransform;
+
+        [SerializeField]
+        int keys = 0;
+        [SerializeField]
+        int coins = 0;
+        [SerializeField]
+        int health = 100;
+        [SerializeField]
+        int healingPickupStrength = 5;
+        [SerializeField]
+        int maxHealth = 100;
+
+        [SerializeField]
+        TextMeshProUGUI keyText;
+        [SerializeField]
+        TextMeshProUGUI coinText;
+        [SerializeField]
+        TextMeshProUGUI healthText;
 
         public PlayerControls playerControls;
 
@@ -45,6 +65,8 @@ namespace Week7
             jump = playerControls.Player.Jump;
             look = playerControls.Player.Look;
             fire = playerControls.Player.Fire;
+
+            health = maxHealth;
         }
 
         private void OnEnable()
@@ -72,6 +94,9 @@ namespace Week7
         {
             HandleHorizontalRotation();
             HandleVerticalRotation();
+
+            healthText.text = $"Health: {health}";
+            if (health <= 0) { SceneManager.LoadScene(SceneManager.GetActiveScene().name); }
         }
 
         private void FixedUpdate()
@@ -160,6 +185,45 @@ namespace Week7
         void Fire(InputAction.CallbackContext context)
         {
             Instantiate(bulletPrefab, gunTransform.position, Camera.main.transform.rotation);
+        }
+
+        private void OnTriggerEnter(Collider collider)
+        {
+            if (collider.CompareTag("Key"))
+            {
+                Debug.Log("Collided with Key");
+                keys++;
+                Destroy(collider.gameObject);
+                keyText.text = $"Keys: {keys.ToString()}";
+            }
+            if (collider.CompareTag("Coin"))
+            {
+                Debug.Log("Collided with Coin");
+                coins++;
+                Destroy(collider.gameObject);
+                coinText.text = $"Coins: {coins.ToString()}";
+                health += healingPickupStrength;
+
+                if (health > maxHealth) { health = maxHealth; }
+            }
+            if (collider.CompareTag("LockedDoorTrigger"))
+            {
+                Debug.Log("Collided with Door");
+                if(keys > 0)
+                {
+                    collider.GetComponent<LockedDoorTrigger>().UnlockDoor();
+                    keys--;
+                    keyText.text = $"Keys: {coins.ToString()}";
+                }
+            }
+        }
+        private void OnTriggerStay(Collider collider)
+        {
+            if (collider.CompareTag("Trap"))
+            {
+                Debug.Log("Collided with Trap");
+                health--;
+            }
         }
     }
 }

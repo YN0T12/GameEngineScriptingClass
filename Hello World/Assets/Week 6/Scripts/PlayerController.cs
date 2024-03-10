@@ -26,6 +26,8 @@ namespace Week6
 
         [SerializeField] float runCost = 1f;
 
+        [SerializeField] int keyCount = 0;
+
         float xRot;
         float yRot;
 
@@ -126,6 +128,7 @@ namespace Week6
             transform.rotation = Quaternion.Euler(xRot, yRot, 0);
             orientation.rotation = Quaternion.Euler(0, yRot, 0);*/
         }
+        
 
         void Jump(InputAction.CallbackContext context)
         {
@@ -152,6 +155,8 @@ namespace Week6
             }
             return false;
         }
+
+        
     }
 }
 

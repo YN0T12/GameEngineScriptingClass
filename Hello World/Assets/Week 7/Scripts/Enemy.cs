@@ -24,23 +24,21 @@ namespace Week7
 
         private void OnTriggerStay(Collider other)
         {
-            mesh.material = damagedMat;
-            health--;
-
-            DOVirtual.DelayedCall(0.1f, () =>
+            if (other.CompareTag("Bullet"))
             {
-                mesh.material = normalMat;
-            });
+                mesh.material = damagedMat;
+                health--;
 
-            if(health <= 0 ) 
-            { 
-                Destroy(gameObject, 0.1f); 
+                DOVirtual.DelayedCall(0.1f, () =>
+                {
+                    mesh.material = normalMat;
+                });
+
+                if (health <= 0)
+                {
+                    Destroy(gameObject, 0.1f);
+                }
             }
-        }
-
-        public void Damage()
-        {
-            Debug.Log("Ouch!");
         }
     }
 }

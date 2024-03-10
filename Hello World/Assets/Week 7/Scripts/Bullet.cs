@@ -29,15 +29,10 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
         mesh.enabled = false;
         burst.Play();
         Destroy(gameObject, 1f);
-
-        if (other.transform.name == "Enemy")
-        {
-            other.GetComponent<Enemy>().Damage();
-        }
     }
 }
