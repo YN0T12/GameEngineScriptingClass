@@ -213,7 +213,7 @@ namespace Week7
                 {
                     collider.GetComponent<LockedDoorTrigger>().UnlockDoor();
                     keys--;
-                    keyText.text = $"Keys: {coins.ToString()}";
+                    keyText.text = $"Keys: {keys.ToString()}";
                 }
             }
         }
