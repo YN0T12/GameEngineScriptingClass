@@ -813,6 +813,45 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Bird"",
+            ""id"": ""25995a81-9aa7-4a09-bea7-b9cbdfc2817e"",
+            ""actions"": [
+                {
+                    ""name"": ""Flap"",
+                    ""type"": ""Button"",
+                    ""id"": ""552cb746-3f85-4cf2-8799-b601db73f9ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""41b7209c-fcb2-4319-b12c-d1122a93dfac"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Flap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3eafcc4b-71e5-4989-b3b0-a11a95cf1786"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Flap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -896,6 +935,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Bird
+        m_Bird = asset.FindActionMap("Bird", throwIfNotFound: true);
+        m_Bird_Flap = m_Bird.FindAction("Flap", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1113,6 +1155,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Bird
+    private readonly InputActionMap m_Bird;
+    private IBirdActions m_BirdActionsCallbackInterface;
+    private readonly InputAction m_Bird_Flap;
+    public struct BirdActions
+    {
+        private @PlayerControls m_Wrapper;
+        public BirdActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Flap => m_Wrapper.m_Bird_Flap;
+        public InputActionMap Get() { return m_Wrapper.m_Bird; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BirdActions set) { return set.Get(); }
+        public void SetCallbacks(IBirdActions instance)
+        {
+            if (m_Wrapper.m_BirdActionsCallbackInterface != null)
+            {
+                @Flap.started -= m_Wrapper.m_BirdActionsCallbackInterface.OnFlap;
+                @Flap.performed -= m_Wrapper.m_BirdActionsCallbackInterface.OnFlap;
+                @Flap.canceled -= m_Wrapper.m_BirdActionsCallbackInterface.OnFlap;
+            }
+            m_Wrapper.m_BirdActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Flap.started += instance.OnFlap;
+                @Flap.performed += instance.OnFlap;
+                @Flap.canceled += instance.OnFlap;
+            }
+        }
+    }
+    public BirdActions @Bird => new BirdActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1177,5 +1252,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IBirdActions
+    {
+        void OnFlap(InputAction.CallbackContext context);
     }
 }

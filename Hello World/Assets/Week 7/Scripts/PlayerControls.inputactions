@@ -791,6 +791,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Bird",
+            "id": "25995a81-9aa7-4a09-bea7-b9cbdfc2817e",
+            "actions": [
+                {
+                    "name": "Flap",
+                    "type": "Button",
+                    "id": "552cb746-3f85-4cf2-8799-b601db73f9ba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "41b7209c-fcb2-4319-b12c-d1122a93dfac",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Flap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3eafcc4b-71e5-4989-b3b0-a11a95cf1786",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Flap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
