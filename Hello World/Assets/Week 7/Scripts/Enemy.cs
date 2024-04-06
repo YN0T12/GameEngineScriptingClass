@@ -8,7 +8,8 @@ namespace Week7
     public class Enemy : MonoBehaviour
     {
         [SerializeField]
-        private float health = 100;
+        private float health = 5;
+        private float currentHealth;
 
         [SerializeField]
         private Material normalMat;
@@ -20,6 +21,7 @@ namespace Week7
         private void Awake()
         {
             mesh = GetComponent<MeshRenderer>();
+            currentHealth = health;
         }
 
         private void OnTriggerStay(Collider other)
@@ -36,9 +38,14 @@ namespace Week7
 
                 if (health <= 0)
                 {
-                    Destroy(gameObject, 0.1f);
+                    this.gameObject.SetActive(false);
                 }
             }
+        }
+        public void RestartGame()
+        {
+            health = currentHealth;
+            this.gameObject.SetActive(true);
         }
     }
 }

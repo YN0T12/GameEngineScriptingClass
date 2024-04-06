@@ -43,5 +43,10 @@ public class LockedDoorTrigger : MonoBehaviour
     public void UnlockDoor()
     {
         unlocked = true;
+        doorObject.transform.DOMove(target, doorSpeed);
+    }
+    public void LockDoor()
+    {
+        unlocked = false;
     }
 }

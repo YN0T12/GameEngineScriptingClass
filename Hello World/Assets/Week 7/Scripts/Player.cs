@@ -10,10 +10,13 @@ namespace Week7
     {
         [SerializeField]
         float speed = 5.0f;
+        float currentSpeed;
         [SerializeField]
         float rotation = 5.0f;
+        float currentRotation;
         [SerializeField]
         float jumpForce = 10f;
+        float currentJumpForce;
 
         [SerializeField]
         GameObject bulletPrefab;
@@ -37,6 +40,8 @@ namespace Week7
         TextMeshProUGUI coinText;
         [SerializeField]
         TextMeshProUGUI healthText;
+        [SerializeField]
+        GameObject RestartButton;
 
         public PlayerControls playerControls;
 
@@ -67,6 +72,9 @@ namespace Week7
             fire = playerControls.Player.Fire;
 
             health = maxHealth;
+            currentSpeed = speed;
+            currentRotation = rotation;
+            currentJumpForce = jumpForce;
         }
 
         private void OnEnable()
@@ -96,7 +104,17 @@ namespace Week7
             HandleVerticalRotation();
 
             healthText.text = $"Health: {health}";
-            if (health <= 0) { SceneManager.LoadScene(SceneManager.GetActiveScene().name); }
+            if (health <= 0) 
+            { 
+                RestartButton.SetActive(true);
+                speed = 0f;
+                rotation = 0f;
+                jumpForce = 0f;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                rb.constraints = RigidbodyConstraints.FreezePositionY;
+            }
+            if (transform.position.y < -400) { health = 0; }
         }
 
         private void FixedUpdate()
@@ -184,7 +202,10 @@ namespace Week7
 
         void Fire(InputAction.CallbackContext context)
         {
-            Instantiate(bulletPrefab, gunTransform.position, Camera.main.transform.rotation);
+            if (health > 0)
+            {
+                Instantiate(bulletPrefab, gunTransform.position, Camera.main.transform.rotation);
+            }
         }
 
         private void OnTriggerEnter(Collider collider)
@@ -193,14 +214,14 @@ namespace Week7
             {
                 Debug.Log("Collided with Key");
                 keys++;
-                Destroy(collider.gameObject);
+                collider.gameObject.SetActive(false);
                 keyText.text = $"Keys: {keys.ToString()}";
             }
             if (collider.CompareTag("Coin"))
             {
                 Debug.Log("Collided with Coin");
                 coins++;
-                Destroy(collider.gameObject);
+                collider.gameObject.SetActive(false);
                 coinText.text = $"Coins: {coins.ToString()}";
                 health += healingPickupStrength;
 
@@ -222,8 +243,32 @@ namespace Week7
             if (collider.CompareTag("Trap"))
             {
                 Debug.Log("Collided with Trap");
-                health--;
+                if (health > 0)
+                {
+                    health--;
+                }
             }
+        }
+
+        public void RestartGame()
+        {
+            speed = currentSpeed;
+            rotation = currentRotation;
+            jumpForce = currentJumpForce;
+            keys = 0;
+            coins = 0;
+            health = maxHealth;
+
+            transform.position = new Vector3(0, 3, 0);
+            rb.constraints = ~RigidbodyConstraints.FreezePositionY;
+            
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+            RestartButton.SetActive(false);
+            keyText.text = $"Keys: {keys.ToString()}";
+            coinText.text = $"Coins: {coins.ToString()}";
         }
     }
 }
