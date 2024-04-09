@@ -10,12 +10,15 @@ namespace Week7
     {
         [SerializeField]
         float speed = 5.0f;
+        [SerializeField]
         float currentSpeed;
         [SerializeField]
         float rotation = 5.0f;
+        [SerializeField]
         float currentRotation;
         [SerializeField]
         float jumpForce = 10f;
+        [SerializeField]
         float currentJumpForce;
 
         [SerializeField]
