@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Week 11/Scenes/CharacterCreator.unity
+    guid: 240dfd144ba29e84680a81ce05eb18ea
   m_configObjects: {}
