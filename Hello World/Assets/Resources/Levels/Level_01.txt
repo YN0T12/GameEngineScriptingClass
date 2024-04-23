@@ -1,0 +1,1 @@
+{"lvlNum":1,"lvlName":"First Level","coinNum":10,"enemyNum":3}
